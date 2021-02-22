@@ -1,0 +1,308 @@
+---
+title: "Análisis Factorial de Correspondencias Multiples"
+author: "Marlon Enrique Pérez M."
+date: "15/2/2021"
+output:
+  html_document: default
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Índice**
+
+1. [¿Qúe es el AFCM?](#id1) 
+2. [Para que sirve el análisis factorial de correspondencias múltiples ](#id2)
+3. [Ventajas del AFC ](#id3)
+4. [Procedimiento de aplicación del AFCM y obtención de resultados en R ](#id4)
+5. [1° Paso. -  Las Tablas estadísticas creadas a partir de una encuesta o cuestionario ](#id5)
+2. [Tabla de códigos condensados (TCC) ](#id6)
+2. [Tabla Disyuntiva completa (TDC) ](#id7)
+2. [Tabla de Burt matriz de Burt (B) ](#id8)
+2. [Notas importantes sobre el AFCM ](#id9)
+2. [2° Paso AFCM aplicado a la tabla de BURT ](#id10)
+2. [AFCM aplicado a la tabla disyuntiva completa ](#id11)
+
+<div id='id1' />
+### **¿Qúe es el AFCM?**
+<p style="text-align: justify;">EL análisis factorial de correspondencias es una técnica estadística que nos permite investigar alguna relación que pueda existir entre variables cualitativas. 
+En este artículo te mostraré la forma más clara y empírica de lo que es, como funciona y que debes considerar para aplicar esta técnica estadística a tus estudios de investigación.</p>
+
+<div id='id2' />
+### **Para que sirve el análisis factorial de correspondencias múltiples** 
+
+<p style="text-align: justify;">El análisis factorial de correspondencias múltiples nos ayuda muchísimo dentro del análisis exploratorio de los datos.  En lo que respecta entre los modelos estadísticos multivariante el AFCM (análisis factorial de correspondencias múltiples) resulta una poderosísima herramienta de procesamiento de datos de características cualitativas y forma parte uno de los instrumentos más relevantes dentro del Proceso de Data Mining dentro de la investigación en las ciencias sociales.</p>
+
+<div id='id3' />
+### **Ventajas del AFC**
+<p style="text-align: justify;">
+* Analizar las relaciones existentes en un grupo de atributos observados.
+* Tratar la información de la encuesta con el nivel de síntesis adecuado con el marco conceptual utilizado.
+*	Reducir las dimensiones del fenómeno observado, sin arbitrariedad.
+*	El AFCM permite evitar los tres errores más comunes que se cometen tratando los datos de una encuesta los cuales son:
+      1.	sólo se exploran las relaciones bivariadas.
+      2.	se seleccionan las Tablas de Contingencia “interesantes” entre las p x q tablas creadas, Cuyo criterio de selección es el test chi2, sin tener en cuenta que El test de independencia del Chi2 no prueba la “fuerza de la asociación entre las variables.
+      3.	se construyen “arbitrariamente” las tipologías que resumen una “unidad temática”.
+*	Veremos también que el A.F.C.M. permite crear, sin arbitrariedad, las tipologías buscadas en un análisis.</p>
+
+<div id='id4' />
+### **Procedimiento de aplicación del AFCM y obtención de resultados en R** 
+
+<div id='id5' />
+#### 1° Paso. -  Las Tablas estadísticas creadas a partir de una encuesta o cuestionario
+
+<p style="text-align: justify;">Para obtener las tablas estadísticas que nacen de un cuestionario es de vital importancia considerar primero que nada los objetivos de la investigación ya que en base a ellos se desarrollan las preguntas y el orden en el que se plantean las mismas, ya que este junto a otros factores pueden influir en las respuestas. Pero calma este no es el objetivo de este artículo en este enlace te indicaré cómo desarrollar un buen cuestionario de investigación.</p>
+
+<p style="text-align: justify;">Para los objetivos de este artículo supondremos que tenemos un modelo de preguntas en un cuestionario 	que se ha realizado a dueños de mascotas en el cual se expresan las siguientes variables de la siguiente forma:</p>
+
+___
+* Primera característica observada   **Tamaño**    
+       1.- Pequeño   
+       2.- Mediano   
+       3.- Grande    
+
+* Segunda característica observada   **Peso**  
+  1.- Liviano   
+  2.- Moderado     
+  3.- Pesado    
+
+* Tercera característica observada **Velocidad**   
+		1.- Lento   
+		2.- Normal    
+		3.- Rápido    
+		
+* Cuarta característica observada   **Inteligencia**    
+		1.- Baja    
+		2.- Moderada    
+		3.- Alta    
+		
+* Quinta característica observada **Afección**    
+		1.- Afectuoso   
+		2.- Nada afectuoso    
+		
+* Sexta característica observada **Agresividad**    
+		1.- No agresivo   
+		2.- Agresivo    
+		
+* Séptima característica observada  **Función**    
+		1.- Hogareño    
+		2.- Caza    
+		3.- Guardián
+		
+___
+
+Y es en este momento cuando a partir de un cuestionario se crea una tabla de datos la cual es llamada tabla de códigos condensados TCC    
+<div id='id6' />
+### **Tabla de códigos condensados (TCC)**    
+<p style="text-align: justify;">Cada línea de la TCC (n x p) contiene todos los códigos correspondientes a las modalidades atribuidas a un individuo, para cada una de las características observadas.
+Pese a ello, una tabla de códigos condensados no posee propiedades numéricas, lo que se quiere decir con esto es que la suma de sus perfiles fila y columna no tienen sentido interpretativo</p>
+
+<center>
+![](C:\Users\k_kep\GitHub\publicaciones\Artículos\Imagenes\TCC.png)    
+</center>   
+
+<div id='id7' />
+### **Tabla Disyuntiva completa (TDC)**    
+
+<p style="text-align: justify;">Y es en este punto cuando surge la necesidad de producir una representación gráfica cuando se transforma una TCC tabla de datos condensados en una tabla lógica de ceros y unos. Considerando que las modalidades u opciones de respuesta deben ser mutuamente excluyentes es decir que para cada pregunta que existen varias opciones de respuesta se pueda responder únicamente una sola opción.  Esta tabla lógica es conocida también como una tabla disyuntiva completa TDC la cual es de orden (n x K) siendo K la suma de las modalidades de las P variables o características observadas.</p>
+
+<center>
+![](C:\Users\k_kep\GitHub\publicaciones\Artículos\Imagenes\TDC.png)    
+</center> 
+<div id='id8' />
+### **Tabla de Burt matriz de Burt (B)**    
+	
+La tabla de Burt surge de multiplicar la tabla disyuntiva completa por si transpuesta con lo cual se obtendría una matriz de orden (K x K).   
+<center>**B = A x A´**</center> 
+<div id='id9' />
+### **Notas importantes sobre el AFCM**    
+
+En este punto hay que tener claro que el AFCM se puede aplicar a dos de las tablas anteriormente mencionadas   
+
+* 1.	AFCM aplicado a la tabla de BURT    
+* 2.	AFCM aplicado a la TDC Tabla disyuntiva completa
+
+Teniendo claro que:   
+
+*	 Las modalidades (columnas) de una Tabla Lógica y de una Tabla de Burt tienen el mismo peso.   
+* 	La nube de puntos-individuos (definida a partir de una Tabla Lógica) y los baricentros de esos puntos (definidos a partir de una Tabla de Burt) están ubicados en el mismo espacio euclidiano, de K dimensiones   
+* 	Los puntos-individuos en la representación de una Tabla Lógica tienen todo el mismo peso, mientras que los puntos-modalidades en la representación de la Tabla de Burt están afectados de un peso que es proporcional a la importancia de la clase.    
+*	 En consecuencia, por la propiedad de equivalencia distribucional que cumplen los espacios dotados de la distancia del Chi2…
+
+El análisis de la nube de puntos-columna N(J), baricentros de los individuos de una Tabla Lógica, puede ser hecho mediante el Análisis Factorial de Correspondencias de una Tabla de Burt.
+ Por lo tanto:
+El Análisis Factorial de Correspondencias de una Tabla Lógica
+Y de una Tabla de Burt tienen que producir resultados equivalentes    
+
+<div id='id10' />
+### **AFCM aplicado a la tabla disyuntiva completa**       
+
+Una vez obtenidos los datos de la encuesta o cuestionario procedemos a preparar los datos para su respectivo análisis:    
+
+```{r include=FALSE}
+library(tidyverse)
+```
+```{r}
+library(readxl)
+ACM_PERRu<- read_excel("C:/Users/k_kep/OneDrive/Escritorio/ACM PERRuño.xlsx")
+View(ACM_PERRu)
+vi<-names(ACM_PERRu)[c(3,4,5,6,7,8,9)]
+```
+Una vez hecha la lectura de la base de datos la cual es nada más que una tabla de códigos condensados se procede a transformar una base de datos TCC a una TDC para lo cual utilizamos la librería **FastDummies**    
+```{r}
+library(fastDummies)
+```
+
+```{r}
+##  SE DEBEN COLOCAR LOS LABELS EN LAS VARIABLES PARA LOS CORRESPONDIENTES ETIQUETADOS
+        ACM_PERRu$Tamaño<-factor(ACM_PERRu$Tamaño,  levels=c("1","2","3")
+                                                 ,  labels=c("pequeño", "mediano", "grande"))
+        ACM_PERRu$Peso<-factor(ACM_PERRu$Peso,  levels=c("1","2","3")
+                                             ,  labels=c("liviano", "moderado", "pesado"))
+        ACM_PERRu$Velocidad<-factor(ACM_PERRu$Velocidad,  levels=c("1","2","3")
+                                                       ,  labels=c("lento", "normal", "rapido"))
+        ACM_PERRu$Inteligencia<-factor(ACM_PERRu$Inteligencia, levels=c("1","2","3")
+                                                             , labels=c("baja", "moderada", "alta"))
+        ACM_PERRu$Afeccion<-factor(ACM_PERRu$Afeccion,  levels=c("1","2")
+                                                     ,  labels=c("afectuoso", "nada afectuoso"))
+        ACM_PERRu$Agresividad<-factor(ACM_PERRu$Agresividad,  levels=c("1","2")
+                                                           ,  labels=c("no agresivo", "agresivo"))
+        ACM_PERRu$Funcion<-factor(ACM_PERRu$Funcion,  levels=c("1","2","3")
+                                                   ,  labels=c("hogareño", "caza", "guardián"))
+## ELABORAMOS LA PSEUDO TABLA DE CODIGOS CONDESADOS LA CUAL TIENE LA INFORMACION CON LOS LABELS DE LAS VARIABLES 
+        PSEUDO_TCC<-ACM_PERRu
+        View(PSEUDO_TCC)
+        var_TDC<-names(PSEUDO_TCC)[c(3,4,5,6,7,8,9)]
+## SELECCIONAMOS UNICAMENTE AQUELLASVARIABLES QUE SON CATEGÓRICAS QUE SE VAN A GRAFICAR EN EL AFCM
+        TCC<-select(PSEUDO_TCC,3:9)
+## GRACIAS A LA FUNCIÓN dummy.cols del paquete fastdummies PODEMOS ELABORAR LA MATRIZ DISYUNTIVA COMPLETA        
+        PSEUDO_TDC<-dummy_cols(TCC,var_TDC)
+## Y FINALMENTE SELECCIONAMOS UNICAMENTE LAS VARIABLES DUMMIES QUE FUERON OBTENIDAS 
+        TDC<-select(PSEUDO_TDC,8:26)
+        col.sums<-apply(TDC, 2, sum)
+       
+```
+
+
+```{r}
+# MATRIZ EN TERMINOS DE PROPORCIONES
+      n<-sum(TDC)
+      P<-TDC/n
+## OBTENEMOS LOS MARGINALES FILAS Y COLUMNAS
+      P<-as.matrix(P)
+      rr<-margin.table(P,1)
+      cc<-margin.table(P,2)
+### OBTENCIÓN DE LA MATRIZ ESTANDARIZADA (S)
+      S<-diag(rr^(-0.5)) %*% (P-rr %*%t (cc))%*%diag(cc^(-0.5))
+## REALIZAMOS LA DESCOMPOSICIÓN DE LA MATRIZ (S)
+      u<-svd(S)$u
+      v<-svd(S)$v
+      Da<-diag(svd(S)$d)
+# OBTENEMOS LAS COORDENADAS PRINCIPALES PARA LOS PUNTOS INDIVIDUOS  LOS PUNTOS VARIABLES
+      FF<-diag(rr^(-0.5))%*% u %*%Da
+      GG<-diag(cc^(-0.5))%*% v %*%Da
+# CÁLCULO DE LA INERCIA
+      cumsum(svd(S)$d)/sum(svd(S)$d)
+# PROCEDIMIENTO PARA ELABORAR EL GRÁFICO
+  # OBTENEMOS LAS COORDENADAS DE LAS DIMENSIONES
+      head(GG)
+  # GRAFICAMOS LA PRIMERA Y LA SEGUNDA DIMENSIÓN QUE SON LAS QUE TIENEN MAYOR CONTRIBUCION A LA INERCIA
+      plot(GG[,1],GG[,2])
+      points(FF[,1],FF[,2],col="brown")
+      kvar<-c("Tamaño_pequeño","Tamaño_mediano","Tamaño_grande","Peso_liviano","Peso_moderado"
+            ,"Peso_pesado","Velocidad_lento","Velocidad_normal","Velocidad_rapido"
+            ,"Inteligencia_baja","Inteligencia_moderada","Inteligencia_alta","Afeccion_afectuoso"
+            ,"Afeccion_nada afectuoso", "Agresividad_no agresivo","Agresividad_agresivo"
+            ,"Funcion_hogareño","Funcion_caza","Funcion_guardián")
+      text(GG[,1],GG[,2],labels =kvar,cex=0.7, col="violet")
+  # GRAFICAMOS LOS PUNTOS INDIVIDUOS
+       
+        points(FF[,1],FF[,2],col="blue")
+        ind<-PSEUDO_TCC$Raza
+        text(FF[,1],FF[,2],labels =ind,cex=0.7,col = "green")
+```
+___
+
+Y con los resultados obtenidos podemos evidenciar el comportamiento que poseen los individuos frente a ciertas características, podemos compararlos entre ellos, obtener cierta información del comportamiento y fidelidad de los datos en determinados tipos de encuestas cuestionarios y estudios. esta herramienta es fundamental para estudios de caracter de investigación cualitativa.
+
+
+<div id='id11' />
+
+
+### **2° Paso AFCM aplicado a la tabla de BURT**       
+   
+El análisis de correspondencia múltiple implica la descomposición de la matriz de BURT en sus respectivos autovalores y autovectores mediante la descomposición espectral la cual queda representada como:    
+<center>**B=E V E´´**</center>      
+
+DONDE:    
+
+* E: Matriz ortogonal de autovectores   
+* V: Matriz diagonal de autovalores
+  
+Los autovalores (λ1> λ2> λ3> ...> λm) son obtenidos a partir de la siguiente Expresión:    
+
+<center>**|B- λI|=0**</center>    
+
+
+Y a los autovalores λ les corresponde un autovector que son obtenidos de
+<center>**|B- λI| a=0**</center> 
+
+Para la selección de los ejes factoriales, también es necesario definir la inercia total de la nube Nk con respecto al centro (0,0) a partir de la siguiente expresión:
+
+Definida la inercia total de la nube de puntos Nk y sabiendo que es igual a la suma de las m autovalores podemos expresar el aporte de cada un eje a lo inercia total de la nube por medio de la tasa de inercia del factor 
+
+para el analisis de correspondencias multiples en una tabla de burt es mucho más sencillo si utilizamos la librería FactorMiner con la cual podemos realizar este tipo de analisis multivariante
+
+```{r include=FALSE}
+library("FactoMineR")
+library("factoextra")
+```
+
+```{r}
+# EN ESTE PASO PODEMOS ASIGNAR UNA TABLA DISYUNTIVA COMPLETA A LA MATIZ DE BURT (afcm).
+    afcm <- MCA(TCC, graph = FALSE)        
+    afcm
+        
+```
+
+
+
+```{r}
+## OBTENEMOS LOES EIGEN VALORES QUE NOS SERVIRÁN PARA ELEGIR LOS FACTORES O LAS DIMENSIONES QUE UTILIZAREMOS PARA REPRESENTAR A LOS PUNTOS VARIABLES Y A LOS PUNTOS INDIVIDUOS.
+eig.val<-get_eigenvalue(afcm)
+eig.val
+
+```
+```{r}
+# REALIZAMOS UN HISTOGRAMA DE LA CONCENTRACIÓN DE LA INERCIA CORRESPONDIENTE A LOES EIGENVALORES PARA MEDIANTE LA REGLA DEL CODO ELEGIR LAS DIMENSIONES
+fviz_screeplot(afcm, addlabels = TRUE)
+
+
+```
+<p style="text-align: justify;">El histograma de la inercia explicada  nos indica que dimensiones se pueden considerar a la hora de realizar las representaciones de los individuos y las variables en los planos factoriales, gracias a la regla del codo se puede evidenciar que la primera y la segunda dimensión concentran el 51,3% de la inercia explicada, pese a ello tambien se puede jugar con la tercera dimension ya que la variación porcentual de la inercia es de un 12 % entre la segunda y tercera dimension frente a un 20 % entre la primera ay segunda. pero pese a ello en este estudio realizaremos unicamente los graficos representados en las dos primeras dimensiones.</p>
+```{r}
+# REALIZAMOS UN PLOTING DE LOS PUNTOS INDIVIDUOS Y LOS PUNTOS VARIABLES PARA VISUALIZAR DE QUE FORMA ESTAN  RELACIONADOS LOS INDIVIDUOS CON REFERENCIA A LAS DIFERENTES VARIABLES
+fviz_mca_biplot(afcm,ggtheme = theme_minimal())
+
+
+``` 
+<p style="text-align: justify;">Este gráfico es el mas importante ya que en el se concentra la médula espinal del estudio ya que asocia los individuos es decir la raza de los canes en este caso con las variables de estudio, en el se puede interpretar que razas (observaciones) estan as intimanete ligadas a determinadas características </p>
+```{r}
+
+# REALIZAMOS UN  PLANO PARA VISUALIZAR LA RELACIÓN QUE GUARDAN LAS VARIABLES EN TORNO A LOS PLANOS FACTORIALES ESCOGIDOS
+fviz_mca_var(afcm, choice = "mca.cor", 
+            repel = TRUE, # Avoid text overlapping (slow)
+            ggtheme = theme_minimal())
+```
+<p style="text-align: justify;">Una vez establecidas las dimensiones se puede comenzar a realizar la representación grafica de los puntos individuos y variables en el caso de los puntos variables o perfiles columna podemos ver que la inteligencia de los canes esta muy asociada con la agresividad, mientras que el tamaño esta asociado con la función que desempeña el animal, por otro lado podemos ver que la velocidad esta relativamente asociada con el peso del can esto poca asociación puede deberse a la concentración de masa muscular de la mascota.</p>
+```{r}
+# FINALMENTE VEMOS COMO ESTAN RELACIONALADAS LAS CATEGORIAS QUE SE REGISTRAN EN LAS VARIABLES DE ESTUDIO ENTORNO A LAS DIMENSIONES ESCOGIDAS.
+fviz_mca_var(afcm, axes = c(1, 2), col.var = "cos2",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE, # Avoid text overlapping
+             ggtheme = theme_minimal())
+```
+
+<p style="text-align: justify;">En el plot de las categorías podemos evidenciar mas claramente como estan relacionadas las categorias, esto nos muestra que categorías estan mas intimamente relacionadas con otras lo que resulta en una profundización de las variables de estudio realizadas </p>
